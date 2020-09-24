@@ -30,9 +30,9 @@ Options:
   --cookie[uri]         -> [Optional] Uri cookie file [default: ./utmauth.cookie]. ex: c:\utmauth.cookie
 
 Example:
-  > perl utmauth.pl --action login --server utm.exmaple.com --login user@exmaple.com --pass "*******"
-  > perl utmauth.pl --action logout --server utm.exmaple.com --login user@exmaple.com
-  > perl utmauth.pl --action keepalive --server utm.exmaple.com --login user@exmaple.com
+  > perl utmauth.pl --action login --server utm.example.com --login user@domain.com --pass "*******"
+  > perl utmauth.pl --action logout --server utm.example.com --login user@domain.com
+  > perl utmauth.pl --action keepalive --server utm.example.com --login user@domain.com
 
 Developer by Andre StuartDev [nbbr.andre@gmail.com]
 
