@@ -51,31 +51,61 @@ print STDERR "Pass parameter invalid\n" and exit ERR_PARAM if ($action eq "login
 print STDERR "Agent parameter invalid\n" and exit ERR_PARAM if (!IsName($agent) || length $agent > 200);
 print STDERR "Cookie parameter invalid\n" and exit ERR_PARAM if (length $agent > 1024);
 
-my $url = "https://$server:$port/authd.fcgi";
-my $data = "Action=AUTH_LOGIN";
-$data .= "&Login=" . unpack("H*", $login);
-$data .= "&Password=" . unpack("H*", $pass);
-$data .= "&UserAgent=" . unpack("H*", $agent);
-
 local $ENV{'PERL_LWP_SSL_VERIFY_HOSTNAME'} = 0;
 
-my $req = HTTP::Request::Common::POST($url, Content => $data);
 my $ua = LWP::UserAgent->new;
-my $res = $ua->request($req);
+my $url = "https://$server:$port/authd.fcgi";
+my $data = "Login=" . unpack("H*", $login);
 
-open(COOKIE,">",$cookie) or die "Cookie parameter invalid\n";
-
-if(!$res || $res->code != "200")
+if($action eq "login")
 {
-    print COOKIE "";
-    close(COOKIE);
-    print STDERR "error " . $res->code . " " . $res->message . "\n";
-    exit ERR_CONN;
-}
+    $data .= "&Action=AUTH_LOGIN";
+    $data .= "&Password=" . unpack("H*", $pass);
+    $data .= "&UserAgent=" . unpack("H*", $agent);
 
-print STDOUT $res->content . "\n";
-print COOKIE $res->content;
-close(COOKIE);
+    my $res = $ua->request(HTTP::Request::Common::POST($url, Content => $data));
+
+    open(COOKIE,">",$cookie) or die "Cookie parameter invalid\n";
+
+    if(!$res || $res->code != "200")
+    {
+        print COOKIE "";
+        close(COOKIE);
+        print STDERR "error " . $res->code . " " . $res->message . "\n";
+        exit ERR_CONN;
+    }
+
+    print STDOUT $res->content . "\n";
+    print COOKIE $res->content;
+    close(COOKIE);
+}
+elsif($action eq "logout")
+{
+    $data .= "&Action=AUTH_LOGOUT";
+    my $res = $ua->request(HTTP::Request::Common::POST($url, Content => $data));
+    unlink($cookie);
+    print STDOUT $res->content . "\n";
+} 
+elsif($action eq "keepalive")
+{
+    open(COOKIE,"<", $cookie) or die "Cookie parameter invalid\n";
+    my $line = <COOKIE>;
+    close(COOKIE);
+
+    my @arr = split(" ", $line);
+    $arr[2] =~ s/ticket://d;
+    $data .= "&id=" . $arr[2];
+    $data .= "&Action=AUTH_KEEPALIVE";
+
+    my $res = $ua->request(HTTP::Request::Common::POST($url, Content => $data));
+    if(!$res || $res->code != "200")
+    {
+        print STDERR "error " . $res->code . " " . $res->message . "\n";
+        exit ERR_CONN;
+    }
+
+    print STDOUT $res->content . "\n";
+}
 
 exit SUCCESS;
 
