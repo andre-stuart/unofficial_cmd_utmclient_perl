@@ -1,7 +1,7 @@
 [![GitHub license](https://img.shields.io/github/license/andre-stuart/unofficial_cmd_utmclient_perl)](https://github.com/andre-stuart/unofficial_cmd_utmclient_perl/blob/master/LICENSE) &nbsp; 
-[![Perl Version](https://img.shields.io/badge/Perl-v5.26.3-blue)]() &nbsp;
-[![Moba Version](https://img.shields.io/badge/MobaXterm-v20.2-blue)]() &nbsp;
-[![Windows Version](https://img.shields.io/badge/Windows-10-blue)]()
+[![Perl Version](https://img.shields.io/badge/Perl-v5.26.3-blue)](https://www.perl.org/) &nbsp;
+[![Moba Version](https://img.shields.io/badge/MobaXterm-v20.2-blue)](https://mobaxterm.mobatek.net/) &nbsp;
+[![Windows Version](https://img.shields.io/badge/Windows-10-blue)](https://www.microsoft.com/pt-br/software-download/windows10)
 
 # unofficial_cmd_utmclient_perl
 Unofficial CMD Client for Blockbit® UTM [perl 6]
