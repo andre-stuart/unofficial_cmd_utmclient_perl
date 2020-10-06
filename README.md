@@ -4,7 +4,7 @@
 [![Windows Version](https://img.shields.io/badge/Windows-10-blue)](https://www.microsoft.com/pt-br/software-download/windows10)
 
 # unofficial_cmd_utmclient_perl
-Unofficial CMD Client for Blockbit® UTM [perl 6]
+Unofficial CMD Client for Blockbit® UTM [perl 5]
 
 ## Dependency
 - libwww-perl
